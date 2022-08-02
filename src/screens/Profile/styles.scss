@@ -1,0 +1,52 @@
+#root {
+    .profile {
+        .profile-info {
+            .profile-avatar {
+                width: 148px;
+                height: 148px;
+            }
+
+            h1 {
+                font-weight: 600;
+                font-size: 38px;
+                line-height: 48px;
+                letter-spacing: 0.02em;
+                cursor: default;
+            }
+
+            .profile-badge {
+                font-weight: 500;
+                font-size: 12px;
+                line-height: 15px;
+                letter-spacing: 0.04em;
+                text-transform: uppercase;
+                background: linear-gradient(180deg, rgba(205, 114, 238, 0.08) 0%, rgba(37, 160, 252, 0.08) 100%);
+                box-shadow: 20px 0px 40px rgba(68, 72, 75, 0.1);
+                border-radius: 8px;
+                min-width: 120px;
+                padding: 13px 23px;
+                border: 1px solid rgba(34, 116, 211, 1);
+                cursor: default;
+            }
+        }
+
+        .sub-title {
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 20px;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: #A1A1A1;
+            cursor: default;
+
+            a {
+                text-decoration: none;
+                color: #A1A1A1;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,56 @@
+#root {
+    footer {
+        font-family: 'Space Grotesk', sans-serif;
+
+        ul {
+            list-style: none;
+            padding-top: 35px;
+            padding-left: 0;
+
+            li {
+                font-weight: 300;
+                font-size: 16px;
+                line-height: 20px;
+                color: #FFFFFF;
+                opacity: 0.75;
+                margin-bottom: 13px;
+            }
+        }
+
+        .heading {
+            font-size: 16px;
+            font-weight: 700;
+            opacity: 1;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .subscribe {
+            background: #191919;
+            padding: 35px;
+
+            .subscribe-input {
+                input {
+                    height: 50px;
+                    box-shadow: none !important;
+                }
+
+                button {
+                    height: 50px;
+                    width: 50px;
+                    background: #748BF5;
+                    border: none !important;
+                    box-shadow: none !important;
+                }
+            }
+        }
+
+        .bottom-list {
+            li {
+                margin-right: 20px;
+                margin-left: 20px;
+                opacity: 1;
+            }
+        }
+    }
+}
