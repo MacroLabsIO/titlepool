@@ -4,6 +4,7 @@ import {
   pinata_secret_api_key,
   pinJSONToIPFS,
   pinFileToIPFS,
+  jwt
 } from "../constants/common";
 import {
   Metadata,
@@ -92,11 +93,21 @@ export const uploadMetadata = async (data) => {
       },
       pinataContent: data,
     };
-    const headers = { pinata_api_key, pinata_secret_api_key };
-    const {
-      data: { IpfsHash },
-    } = await axios.post(pinJSONToIPFS, body, { headers });
-    return `https://gateway.pinata.cloud/ipfs/${IpfsHash}`;
+    
+    var config = {
+      method: 'post',
+      url: 'https://api.pinata.cloud/pinning/pinJSONToIPFS',
+      headers: { 
+        'pinata_api_key': `${pinata_api_key}`,
+        'pinata_secret_api_key': `${pinata_secret_api_key}`,
+        'Content-Type': 'application/json', 
+      },
+      data : body
+    };
+
+    const res = await axios(config);
+    const ipfsHash = res.data.IpfsHash;
+    return `https://gateway.pinata.cloud/ipfs/${ipfsHash}`;
   } catch (e) {
     throw e;
   }
@@ -106,16 +117,22 @@ export const uploadFiles = async (file) => {
   console.log("uploading files");
   try {
     let data = new FormData();
-
     data.append("file", file);
-
-    const headers = { pinata_api_key, pinata_secret_api_key };
-
-    const {
-      data: { IpfsHash },
-    } = await axios.post(pinFileToIPFS, data, { headers });
-
-    return `https://gateway.pinata.cloud/ipfs/${IpfsHash}`;
+  
+    var config = {
+      method: 'post',
+      url: 'https://api.pinata.cloud/pinning/pinFileToIPFS',
+      headers: { 
+        'pinata_api_key': `${pinata_api_key}`,
+        'pinata_secret_api_key': `${pinata_secret_api_key}`,
+        "Content-Type": "multipart/form-data"
+      },
+      data : data
+    };
+    
+    const res = await axios(config);
+    const ipfsHash = res.data.IpfsHash;
+    return `https://gateway.pinata.cloud/ipfs/${ipfsHash}`;
   } catch (e) {
     throw e;
   }
