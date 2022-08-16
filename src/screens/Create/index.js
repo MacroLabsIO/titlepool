@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Col, Form, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
@@ -28,6 +28,7 @@ import {
   uploadFiles,
   normalizeMetadata,
   uploadMetadata,
+  uploadPDFContract
 } from "../../utils/utils";
 
 const { actions } = require("@metaplex/js");
@@ -49,7 +50,7 @@ const Create = React.memo(() => {
       setMintMessage("Uploading Image...");
       let imageURI = await uploadFiles(metadata.thumbnail);
       setMintMessage("Uploading Contract...");
-      let ContractURI = await uploadFiles(metadata.contractFile);
+      let ContractURI = await uploadPDFContract(metadata);
       setMintMessage("Uploading Metadata...");
       let NftMetadata = normalizeMetadata(
         metadata,
@@ -303,12 +304,33 @@ const Create = React.memo(() => {
               <FontAwesomeIcon icon={faCaretDown} />
             </Form.Group>
 
-            <FileUploader
-              handleFile={(e) => setMetadata({ ...metadata, contractFile: e })}
-              file={metadata.contractFile}
-              accept=".pdf"
-              label="Upload Contract File - ( PDF )"
-            />
+            <Form.Group className="input-primary mb-5">
+              <Form.Label className="label">Right</Form.Label>
+              <Form.Control
+                value={metadata.right}
+                onChange={(e) =>
+                  setMetadata({ ...metadata, right: e.target.value })
+                }
+                required
+                id="right"
+                type="text"
+                placeholder="Right"
+              />
+            </Form.Group>
+
+            <Form.Group className="input-primary mb-5">
+              <Form.Label className="label">Runtime</Form.Label>
+              <Form.Control
+                value={metadata.runtime}
+                onChange={(e) =>
+                  setMetadata({ ...metadata, runtime: e.target.value })
+                }
+                required
+                id="runtime"
+                type="text"
+                placeholder="Runtime"
+              />
+            </Form.Group>
 
             <Form.Group className="input-primary mb-5">
               <Form.Label className="label">IMBD Link</Form.Label>
