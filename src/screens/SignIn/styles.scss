@@ -1,0 +1,23 @@
+#root {
+    .sign-in {
+        background: url("../../../public/splash.png") no-repeat left center;
+        height: 100vh;
+        position: relative;
+
+        .forgot-password {
+            color: #D4F4FF;
+            text-decoration: none;
+        }
+
+        .buttons {
+            button {
+                width: 213px;
+            }
+
+            .button-primary {
+                border: none !important;
+                text-decoration: underline;
+            }
+        }
+    }
+}

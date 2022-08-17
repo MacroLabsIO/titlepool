@@ -1,0 +1,33 @@
+#root {
+    .about-us {
+        .section-title {
+            font-weight: 700;
+            font-size: 60px;
+            line-height: 76px;
+            display: flex;
+            align-items: center;
+            letter-spacing: 0.04em;
+            color: #000000;
+            text-shadow: 0 1px 0 #ffffff, 0 0 0 #ffffff;
+        }
+
+        .sub-title {
+            font-weight: 700;
+            font-size: 38px;
+            line-height: 36px;
+            letter-spacing: 0.03em;
+            width: 505px;
+        }
+
+        .info-text {
+            font-weight: 500;
+            font-size: 24px;
+            line-height: 36px;
+            width: 505px;
+        }
+
+        .max-width-1020 {
+            max-width: 1020px;
+        }
+    }
+}

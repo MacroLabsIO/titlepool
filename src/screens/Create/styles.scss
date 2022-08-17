@@ -1,0 +1,20 @@
+#root {
+  .create {
+    h1 {
+      font-weight: 700;
+      font-size: 38px;
+      line-height: 48px;
+      letter-spacing: 0.02em;
+    }
+
+    .create-form {
+      label {
+        color: #5f6377;
+      }
+    }
+  }
+  .mint-message {
+    text-align: center;
+    font-family: "CircularStd-Book" !important;
+  }
+}

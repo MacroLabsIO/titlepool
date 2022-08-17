@@ -1,0 +1,87 @@
+.date_picker {
+    position: relative;
+
+    input {
+        width: 100%;
+        background: #202020 !important;
+        border: 1px solid rgba(255, 255, 255, 0.4) !important;
+        color: #888888 !important;
+        border-radius: 12px;
+        height: 56px;
+        padding: 6px 12px;
+        transition: all .15s ease-in-out;
+
+        &:focus-visible {
+            outline: none;
+        }
+
+        &:focus {
+            outline: 0;
+            border: 1px solid #CFD0D7 !important;
+            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5);
+            background: #141414 !important;
+        }
+    }
+
+    svg {
+        position: absolute;
+        bottom: 20px;
+        right: 15px;
+    }
+
+    .react-datepicker {
+        border: none;
+        background-color: #282729;
+        font-family: 'Inter', sans-serif;
+        border-radius: 12px;
+        overflow: hidden;
+
+        .react-datepicker__navigation--previous,
+        .react-datepicker__navigation--next {
+            top: 10px;
+        }
+
+        .react-datepicker__header {
+            background-color: #282729;
+            border: none;
+            border-radius: 0;
+    
+            .react-datepicker__current-month {
+                color: #ffffff;
+                font-weight: 500;
+            }
+    
+            .react-datepicker__day-names {
+                .react-datepicker__day-name {
+                    color: #ffffff;
+                    margin: 5px;
+                }
+            }
+        }
+    
+        .react-datepicker__day--selected,
+        .react-datepicker__day--keyboard-selected {
+            background-color: #748BF5;
+            color: #ffffff !important;
+            border-radius: 40px;
+        }
+    
+        .react-datepicker__day {
+            color: #C9C8CC;
+            margin: 5px;
+    
+            &:hover {
+                background: #313133;
+                border-radius: 40px;
+            }
+        }
+    
+        .react-datepicker__day--outside-month {
+            color: #737274 !important;
+        }
+    
+        .react-datepicker__triangle {
+            display: none;
+        }
+    }
+}

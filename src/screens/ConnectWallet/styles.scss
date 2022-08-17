@@ -1,0 +1,40 @@
+#root {
+    .connect-wallet {
+        height: 100vh;
+        position: relative;
+
+        .container {
+
+            h1 {
+                font-size: 38px;
+                line-height: 48px;
+                font-family: "CircularStd-Bold";
+                letter-spacing: 0.02em;
+            }
+
+            h6 {
+                color: #A1A1A1;
+                font-size: 18px;
+            }
+
+            .phantom-card {
+                background: #202020;
+                border: 1px solid #433E3E;
+                /* GLARE */
+                box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.16), inset 1.39157px -1.39157px 2.78313px rgba(31, 31, 31, 0.2), inset 0px 1.5px 1px #414141, inset -1.39157px -1.39157px 4.1747px rgba(31, 31, 31, 0.9);
+                border-radius: 12px;
+                width: 264px;
+
+                h3 {
+                    font-family: "CircularStd-Black";
+                    font-size: 22px;
+                }
+
+                h6 {
+                    font-family: "CircularStd-Medium";
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+}
