@@ -17,33 +17,29 @@ const AboutUs = React.memo(() => {
                     </Col>
 
                     <Col xs={6} className="d-flex align-items-center mt-5">
-                        <h1 className="sub-title">1. Tons Of Research</h1>
+                        <h1 className="sub-title">For Filmmakers</h1>
                     </Col>
                     <Col xs={6} className="d-flex align-items-center justify-content-center mt-5">
                         <h6 className="info-text">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elit metus massa a congue faucibus.
-                            dolor sit amet, consectetur adipiscing elit. Elit metus massa a congue faucibus.
+                        1. Determine which rights you want to sell and for how long you should be the owner of these rights.
+                        
+                        2. Mint your contract - a trackable NFT will be generated with a written contract attached
+                        
+                        3. List your NFT - Buyers will be able to bid for the selected rights to your film, ensuring you get a fair market price for very specific privileges.
                         </h6>
                     </Col>
 
                     <Col xs={6} className="d-flex align-items-center mt-5">
                         <h6 className="info-text">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elit metus massa a congue faucibus.
-                            dolor sit amet, consectetur adipiscing elit. Elit metus massa a congue faucibus.
+                        1. Search for exciting projects that matter to your audiences - Rights and terms listed clearly on each hot sheet
+                        
+                        2. Place a bid - Winning a contract will place it directly in your inventory
+                        
+                        3. Exercise or sell your newly acquired rights - Clear rights designations ensure everyone knows what’s within their privileges. Selling the rights onward ensures easy and straightforward payments to all parties.
                         </h6>
                     </Col>
                     <Col xs={6} className="d-flex align-items-center justify-content-center mt-5">
-                        <h1 className="sub-title">2. Interactive Design</h1>
-                    </Col>
-
-                    <Col xs={6} className="d-flex align-items-center mt-5">
-                        <h1 className="sub-title">3. Tons Of Research</h1>
-                    </Col>
-                    <Col xs={6} className="d-flex align-items-center justify-content-center mt-5 mb-5">
-                        <h6 className="info-text">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elit metus massa a congue faucibus.
-                            dolor sit amet, consectetur adipiscing elit. Elit metus massa a congue faucibus.
-                        </h6>
+                        <h1 className="sub-title">For Buyers</h1>
                     </Col>
 
                     <Col xs={12} className="mt-5 d-flex flex-column justify-content-center align-items-center">
