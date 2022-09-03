@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Routes, Route } from "react-router-dom";
-import { useUserContext } from "../context/UserProvider";
+import { AuthContext } from "../context/AuthProvider";
 import AboutUs from "../screens/AboutUs";
 import ConnectWallet from "../screens/ConnectWallet";
 import Create from "../screens/Create";
@@ -14,12 +14,12 @@ import UpcomingListings from "../screens/UpcomingListings";
 import { useWallet } from "@solana/wallet-adapter-react";
 
 const NavigationContainer = React.memo(() => {
-  const { isLogin } = useUserContext();
+  const { currentUser } = useContext(AuthContext)
   const { publicKey } = useWallet();
 
   return (
     <Routes>
-      <Route path="/" element={publicKey ? <Explore /> : <SignIn />} />
+      <Route path="/" element={ currentUser ? <Explore /> : <SignIn />} />
       <Route path="/preview" element={<ExploreSingleItem />} />
       <Route path="/sign-up" element={<SignUp />} />
       <Route path="/connect-wallet" element={<ConnectWallet />} />
