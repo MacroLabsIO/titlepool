@@ -1,18 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Form, InputGroup, FormControl, Col, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import Header from "../../components/Header";
-import { useUserContext } from "../../context/UserProvider";
+import firebase from "../../context/firebase"
 import './styles.scss';
 
 const SignIn = React.memo(() => {
 
-    const { setIsLogin } = useUserContext();
     const navigate = useNavigate();
+    const [error, setError] = useState('');
 
-    const onSignIn = () => {
-        navigate('/connect-wallet');
-        setIsLogin(true);
+    const onSignIn = (e) => {
+        e.preventDefault()
+        const formData = new FormData(e.target)
+        const data = Object.fromEntries(formData.entries())
+        
+        signInWithEmailAndPassword(firebase, data.email, data.password)
+        .then((userCredential) => {
+            navigate('/connect-wallet');
+        })
+        .catch((error) => {
+            const errorMessage = error.message;
+            setError(errorMessage.split(': ')[1]);
+        });
     }
 
     return (
@@ -21,24 +32,30 @@ const SignIn = React.memo(() => {
                 <Header />
                 <Container className="d-flex flex-column align-items-end justify-content-center h-100">
                     <Col xs={12} lg={6}>
-                        <Form.Label>Email</Form.Label>
-                        <InputGroup className="input-primary mb-3">
-                            <FormControl id="basic-url" type="email" aria-describedby="basic-addon3" placeholder="Eg. example@email.com" />
-                        </InputGroup>
+                        <Form className="signup-form mt-5" onSubmit={onSignIn}>
 
-                        <Form.Label className="mt-4">Password</Form.Label>
-                        <InputGroup className="input-primary mb-3">
-                            <FormControl id="basic-url" type="password" aria-describedby="basic-addon3" placeholder="Password" />
-                        </InputGroup>
+                            <Form.Label>Email</Form.Label>
+                            <InputGroup className="input-primary mb-3">
+                                <FormControl id="email" type="email" name="email" aria-describedby="basic-addon3" placeholder="Eg. example@email.com" />
+                            </InputGroup>
 
-                        <div className="text-end">
-                            <Link to="/" className="forgot-password">Forgot Password</Link>
-                        </div>
+                            <Form.Label className="mt-4">Password</Form.Label>
+                            <InputGroup className="input-primary mb-3">
+                                <FormControl id="password" type="password" name="password" aria-describedby="basic-addon3" placeholder="Password" />
+                            </InputGroup>
 
-                        <div className="buttons d-flex flex-column align-items-center mt-5">
-                            <Button className="button-secondary" onClick={() => navigate('/sign-up')}>Sign Up</Button>
-                            <Button className="button-primary mt-4" onClick={onSignIn}>Sign In</Button>
-                        </div>
+                            { error &&  <Form.Label className="error-text">{error}</Form.Label> } 
+
+
+                            <div className="text-end">
+                                <Link to="/" className="forgot-password">Forgot Password</Link>
+                            </div>
+
+                            <div className="buttons d-flex flex-column align-items-center mt-5">
+                                <Button className="button-secondary" onClick={() => navigate('/sign-up')}>Sign Up</Button>
+                                <Button className="button-primary mt-4" type="submit">Sign In</Button>
+                            </div>
+                        </Form>
                     </Col>
                 </Container>
             </div>
