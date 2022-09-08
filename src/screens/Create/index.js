@@ -14,6 +14,7 @@ import {
   terms,
   exhibitionTypes,
   genreList,
+  projectTypeList,
   initialMetadata,
 } from "../../utils/createOptions";
 import "./styles.scss";
@@ -304,18 +305,25 @@ const Create = React.memo(() => {
               <FontAwesomeIcon icon={faCaretDown} />
             </Form.Group>
 
-            <Form.Group className="input-primary mb-5">
-              <Form.Label className="label">Right</Form.Label>
-              <Form.Control
-                value={metadata.right}
+            <Form.Group className="select-primary mb-5">
+              <Form.Label className="label">Project Type</Form.Label>
+              <Form.Select
+                value={metadata.projectType}
                 onChange={(e) =>
-                  setMetadata({ ...metadata, right: e.target.value })
+                  setMetadata({ ...metadata, projectType: e.target.value })
                 }
-                required
-                id="right"
-                type="text"
-                placeholder="Right"
-              />
+                defaultValue="type"
+                id="projectType"
+                aria-label="ProjectType"
+              >
+                <option value="type" disabled>
+                  Project Type
+                </option>
+                {projectTypeList.sort().map((item) => (
+                  <option value={item}>{item}</option>
+                ))}
+              </Form.Select>
+              <FontAwesomeIcon icon={faCaretDown} />
             </Form.Group>
 
             <Form.Group className="input-primary mb-5">

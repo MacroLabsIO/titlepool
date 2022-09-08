@@ -75,6 +75,14 @@ export const genreList = [
   "Dark Comedy",
 ];
 
+export const projectTypeList = [
+  "",
+  "Feature",
+  "Episodic",
+  "Short",
+  "Webseries"
+];
+
 export const initialMetadata = {
   filmName: "",
   reservePrice: "",
