@@ -1,5 +1,5 @@
 import React, { useEffect, useState, createContext } from 'react'
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, getAuth } from "firebase/auth";
 import firebase from './firebase'
 
 export const AuthContext = createContext()
@@ -7,7 +7,7 @@ export const AuthContext = createContext()
 export const AuthProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(null);
 
-    onAuthStateChanged(firebase, (user) => {
+    onAuthStateChanged(getAuth(firebase), (user) => {
         if (user) {
           console.log(user.email + ' is signed in')
           setCurrentUser(user);

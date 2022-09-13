@@ -184,7 +184,7 @@ export const uploadPDFContract = async (metadata) => {
       type: "application/pdf",
     });
 
-    await uploadFiles(file);
+    return await uploadFiles(file);
 
   } catch (e) {
     throw e

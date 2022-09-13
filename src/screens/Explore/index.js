@@ -31,17 +31,10 @@ const Explore = React.memo(() => {
 
   const candyShopRef = useRef(
     new CandyShop({
-      candyShopCreatorAddress: new PublicKey(
-        "6qpZoUozcWDT56RQguLvNXmiARsvPwjMQphogvKCFjBT"
-      ), // creator address (i.e. your wallet address)
-      treasuryMint: new PublicKey(
-        "So11111111111111111111111111111111111111112"
-      ), // treasury mint (i.e. currency to buy and sell with)
-      candyShopProgramId: new PublicKey(
-        "csa8JpYfKSZajP7JzxnJipUL3qagub1z29hLvp578iN"
-      ), // Candy Shop program id
-      env: "devnet", // mainnet, devnet
-      // settings: settings, // (optional) additional shop settings
+      candyShopCreatorAddress: new PublicKey("CwpGjez3RTGuCKUZ3nMqyE4uyuX9s4DJzon5nDGryTkc"), // Candy Shop owner address
+      treasuryMint: new PublicKey("So11111111111111111111111111111111111111112"), // Candy Shop transaction currency
+      candyShopProgramId: new PublicKey("csbMUULiQfGjT8ezT16EoEBaiarS6VWRevTw1JMydrS"), // Candy Shop program ID
+      env: "devnet", // network
     })
   );
 

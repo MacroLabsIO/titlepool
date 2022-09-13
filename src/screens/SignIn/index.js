@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Container, Form, InputGroup, FormControl, Col, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
 import Header from "../../components/Header";
 import firebase from "../../context/firebase"
 import './styles.scss';
@@ -16,7 +16,7 @@ const SignIn = React.memo(() => {
         const formData = new FormData(e.target)
         const data = Object.fromEntries(formData.entries())
         
-        signInWithEmailAndPassword(firebase, data.email, data.password)
+        signInWithEmailAndPassword(getAuth(firebase), data.email, data.password)
         .then((userCredential) => {
             navigate('/connect-wallet');
         })
