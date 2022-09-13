@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Container, Form, Col, Button } from "react-bootstrap";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import Header from "../../components/Header";
@@ -270,7 +270,7 @@ const SignUp = React.memo(() => {
         const formData = new FormData(e.target)
         const data = Object.fromEntries(formData.entries())
         
-        createUserWithEmailAndPassword(firebase, data.email, data.password)
+        createUserWithEmailAndPassword(getAuth(firebase), data.email, data.password)
         .then(() => {
             navigate('/connect-wallet');
         })

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import _ from 'lodash';
+import React, { useState, useEffect, useContext } from "react";
 import { Container, Col, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer";
@@ -15,9 +16,14 @@ import { CandyShop } from "@liqnft/candy-shop-sdk";
 import { CreateAuction } from "@liqnft/candy-shop";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { NavLink } from "react-router-dom";
+import { AuthContext } from "../../context/AuthProvider";
+import { getDatabase, ref, child, get } from "firebase/database";
+import firebase from '../../context/firebase';
+
 
 const Wallet = React.memo(() => {
   const navigate = useNavigate();
+  const { currentUser } = useContext(AuthContext)
   const [tokenList, setTokenList] = useState([]);
   const [userNfts, setUserNfts] = useState([]);
   const { connection } = useConnection();
@@ -88,25 +94,31 @@ const Wallet = React.memo(() => {
   const updateTokenList = async () => {
     let tokens = [];
 
-    const dbInfo = await axios.get(
-      "https://title-pool-test.herokuapp.com/nft/list"
-    );
-    dbInfo.data.nfts.map((el) => {
-      if (el.token_address !== "") {
-        tokens.push(el.token_address);
-      }
-      return;
+    const dbRef = ref(getDatabase(firebase));
+    get(child(dbRef, 'nft/' + currentUser.email.split('@')[0]))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          console.log(snapshot.val());
+          tokens = snapshot.val().data;
+          setTokenList(tokens);
+        } else {
+          console.log("No data available");
+        }
+    }).catch((error) => {
+      console.error(error);
     });
-
-    setTokenList(tokens);
   };
 
   useEffect(() => {
-    updateTokenList();
-  }, []);
+    if (currentUser) {
+      updateTokenList();
+    }
+  }, [currentUser]);
 
   useEffect(() => {
-    getUserNfts();
+    if (!_.isEmpty(tokenList)) {
+      getUserNfts();
+    }
   }, [tokenList, wallet]);
 
   const topFeaturedList = [

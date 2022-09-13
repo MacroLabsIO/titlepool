@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Navbar, Container, Nav, Image, Button } from "react-bootstrap";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { signOut } from "firebase/auth";
+import { signOut, getAuth } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
 import { useWallet } from "@solana/wallet-adapter-react";
@@ -55,7 +55,7 @@ const Header = React.memo(() => {
                             <WalletMultiButton className="button-primary ms-5" />
                             <Button
                                 onClick={() => {
-                                    signOut(firebase, () => {
+                                    signOut(getAuth(firebase), () => {
                                         navigate("/");
                                     });
                                 }}

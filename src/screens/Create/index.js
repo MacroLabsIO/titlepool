@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Container, Col, Form, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
@@ -19,8 +19,7 @@ import {
 } from "../../utils/createOptions";
 import "./styles.scss";
 import { useWallet, useConnection } from "@solana/wallet-adapter-react";
-import { PublicKey } from "@solana/web3.js";
-import axios from "axios";
+import { PublicKey, Connection, clusterApiUrl } from "@solana/web3.js";
 import {
   TOKEN_PROGRAM_ID,
   ASSOCIATED_TOKEN_PROGRAM_ID,
@@ -31,13 +30,15 @@ import {
   uploadMetadata,
   uploadPDFContract
 } from "../../utils/utils";
-
-const { actions } = require("@metaplex/js");
-const { mintNFT } = actions;
+import { Metaplex, walletAdapterIdentity } from "@metaplex-foundation/js";
+import { AuthContext } from "../../context/AuthProvider";
+import { getDatabase, ref, set } from "firebase/database";
+import firebase from "../../context/firebase"
 
 const Create = React.memo(() => {
   const navigate = useNavigate();
   const wallet = useWallet();
+  const { currentUser } = useContext(AuthContext)
   const { connection } = useConnection();
   const [metadata, setMetadata] = useState(initialMetadata);
   const [isLoading, setIsLoading] = useState(false);
@@ -63,18 +64,22 @@ const Create = React.memo(() => {
       let uri = await uploadMetadata(NftMetadata);
 
       setMintMessage("Sending Transaction...");
-      const response = await mintNFT({
-        connection,
-        wallet,
-        uri,
-        maxSupply: "1",
-      });
+      const metaplex = Metaplex.make(connection).use(walletAdapterIdentity(wallet));
+      const response = await metaplex
+      .nfts()
+      .create({
+          uri: uri,
+          name: metadata.filmName,
+          sellerFeeBasisPoints: metadata.royaltyPerc*100
+      })
+      .run();
+
 
       const [address] = await PublicKey.findProgramAddress(
         [
           wallet.publicKey.toBuffer(),
           TOKEN_PROGRAM_ID.toBuffer(),
-          response.mint.toBuffer(),
+          response.mintAddress.toBuffer(),
         ],
         ASSOCIATED_TOKEN_PROGRAM_ID
       );
@@ -83,31 +88,17 @@ const Create = React.memo(() => {
 
       let data = JSON.stringify({
         creator: wallet.publicKey.toString(),
-        mint_address: response.mint.toString(),
+        mint_address: response.mintAddress.toString(),
         token_address: address.toString(),
       });
 
-      let config = {
-        method: "post",
-        url: "https://title-pool-test.herokuapp.com/nft/add",
-        headers: {
-          "Content-Type": "application/json",
-          mode: "cors",
-        },
-        data: data,
-      };
       setMintMessage("Updating Database...");
-      await axios(config)
-        .then(function (response) {
-          console.log(JSON.stringify(response.data));
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      const db = getDatabase(firebase);
+      set(ref(db, 'nft/' + currentUser.email.split('@')[0]), {
+        data: data
+      });
+
       setMintMessage("NFT Minted! Going back to your wallet...");
-      // setTimeout(() => {
-      //   navigate("/wallet");
-      // }, 4000);
     } catch (error) {
       setMintMessage(
         `Something went wrong, \n complete all fields and try again`
