@@ -19,212 +19,144 @@ import { NavLink } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
 import { getDatabase, ref, child, get } from "firebase/database";
 import firebase from '../../context/firebase';
+import { token } from '@metaplex-foundation/js';
 
 
 const Wallet = React.memo(() => {
-  const navigate = useNavigate();
-  const { currentUser } = useContext(AuthContext)
-  const [tokenList, setTokenList] = useState([]);
-  const [userNfts, setUserNfts] = useState([]);
-  const { connection } = useConnection();
-  const wallet = useWallet();
+	const navigate = useNavigate();
+	const { currentUser } = useContext(AuthContext)
+	const [tokenList, setTokenList] = useState([]);
+	const [userNfts, setUserNfts] = useState([]);
+	const { connection } = useConnection();
+	const wallet = useWallet();
 
-  const getUserNfts = async () => {
-    const validTokenAccounts = await getValidTokenAccounts(
-      connection,
-      wallet.publicKey
-    );
-    let titlePoolNfts = [];
-    await Promise.all(
-      validTokenAccounts.map(async (tokenAccountAddress) => {
-        if (tokenList.includes(tokenAccountAddress)) {
-          const tokenAccount = await (0, getAccount)(
-            connection,
-            new PublicKey(tokenAccountAddress)
-          );
-          const [nftMetadataPublicKey] = await PublicKey.findProgramAddress(
-            [
-              Buffer.from("metadata"),
-              MetadataProgramPubkey.toBuffer(),
-              tokenAccount.mint.toBuffer(),
-            ],
-            MetadataProgramPubkey
-          );
-          const nftMetadataAccountInfo = await safeAwait(
-            connection.getAccountInfo(nftMetadataPublicKey)
-          );
+	const getUserNfts = async () => {
+		const validTokenAccounts = await getValidTokenAccounts(
+			connection,
+			wallet.publicKey
+		);
+		let titlePoolNfts = [];
+		await Promise.all(
+			validTokenAccounts.map(async (tokenAccountAddress) => {
+				const token = _.find(tokenList, (o) => {
+					return _.has(o, tokenAccountAddress);
+				});
+				if (token) {
+					const tokenAccount = await (0, getAccount)(
+						connection,
+						new PublicKey(tokenAccountAddress)
+					);
+					const [nftMetadataPublicKey] = await PublicKey.findProgramAddress(
+						[
+							Buffer.from("metadata"),
+							MetadataProgramPubkey.toBuffer(),
+							tokenAccount.mint.toBuffer(),
+						],
+						MetadataProgramPubkey
+					);
+					const nftMetadataAccountInfo = await safeAwait(
+						connection.getAccountInfo(nftMetadataPublicKey)
+					);
 
-          const tokenInfo = parseMetadata(nftMetadataAccountInfo.result.data);
-          // const { data } = await axios.get(tokenInfo.data.uri);
-          const { data } = await axios.get(
-            `https://gateway.ipfs.io/ipfs${tokenInfo.data.uri.split("ipfs")[1]}`
-          );
-          console.log(
-            `https://ipfs.io/ipfs${tokenInfo.data.uri.split("ipfs")[1]}`,
-            "uri"
-          );
-          data.tokenAccount = tokenAccountAddress;
-          titlePoolNfts.push(data);
-        }
-        return;
-      })
-    );
+					const tokenInfo = parseMetadata(nftMetadataAccountInfo.result.data);
+					// const { data } = await axios.get(tokenInfo.data.uri);
+					const { data } = await axios.get(
+						`https://gateway.ipfs.io/ipfs${tokenInfo.data.uri.split("ipfs")[1]}`
+					);
+					console.log(
+						`https://ipfs.io/ipfs${tokenInfo.data.uri.split("ipfs")[1]}`,
+						"uri"
+					);
+					data.tokenAccount = tokenAccountAddress;
+					titlePoolNfts.push(data);
+				}
+				return;
+			})
+		);
 
-    console.log(titlePoolNfts);
-    setUserNfts(titlePoolNfts);
-  };
+		console.log(titlePoolNfts);
+		setUserNfts(titlePoolNfts);
+	};
 
-  const getValidTokenAccounts = async (connection, walletAddress) => {
-    // Filter out invalid token which is not NFT.
-    const tokenAccounts = await connection.getParsedTokenAccountsByOwner(
-      walletAddress,
-      { programId: TOKEN_PROGRAM_ID }
-    );
-    return tokenAccounts.value
-      .filter((account) => {
-        const tokenAmount = account.account.data.parsed.info.tokenAmount;
-        const tokenAmountIsOne = Number(tokenAmount.amount) === 1;
-        const tokenDecimalsIsZero = Number(tokenAmount.decimals) === 0;
-        if (tokenAmountIsOne && tokenDecimalsIsZero) return true;
-        return false;
-      })
-      .map((account) => account.pubkey.toString());
-  };
+	const getValidTokenAccounts = async (connection, walletAddress) => {
+		// Filter out invalid token which is not NFT.
+		const tokenAccounts = await connection.getParsedTokenAccountsByOwner(
+			walletAddress,
+			{ programId: TOKEN_PROGRAM_ID }
+		);
+		return tokenAccounts.value
+			.filter((account) => {
+				const tokenAmount = account.account.data.parsed.info.tokenAmount;
+				const tokenAmountIsOne = Number(tokenAmount.amount) === 1;
+				const tokenDecimalsIsZero = Number(tokenAmount.decimals) === 0;
+				if (tokenAmountIsOne && tokenDecimalsIsZero) return true;
+				return false;
+			})
+			.map((account) => account.pubkey.toString());
+	};
 
-  const updateTokenList = async () => {
-    let tokens = [];
+	const updateTokenList = async () => {
+		const dbRef = ref(getDatabase(firebase));
+		get(child(dbRef, 'nft/' + currentUser.email.split('@')[0]))
+			.then((snapshot) => {
+				if (snapshot.exists()) {
+					console.log(snapshot.val());
+					const data = snapshot.val();
+					const tokenList = [];
+					_.mapValues(data, (o) => {
+						tokenList.push(o);
+					})
+					setTokenList(tokenList);
+				} else {
+					console.log("No data available");
+				}
+			}).catch((error) => {
+				console.error(error);
+			});
+	};
 
-    const dbRef = ref(getDatabase(firebase));
-    get(child(dbRef, 'nft/' + currentUser.email.split('@')[0]))
-      .then((snapshot) => {
-        if (snapshot.exists()) {
-          console.log(snapshot.val());
-          tokens = snapshot.val().data;
-          setTokenList(tokens);
-        } else {
-          console.log("No data available");
-        }
-    }).catch((error) => {
-      console.error(error);
-    });
-  };
+	useEffect(() => {
+		if (currentUser) {
+			updateTokenList();
+		}
+	}, [currentUser]);
 
-  useEffect(() => {
-    if (currentUser) {
-      updateTokenList();
-    }
-  }, [currentUser]);
+	useEffect(() => {
+		if (!_.isEmpty(tokenList)) {
+			getUserNfts();
+		}
+	}, [tokenList, wallet]);
 
-  useEffect(() => {
-    if (!_.isEmpty(tokenList)) {
-      getUserNfts();
-    }
-  }, [tokenList, wallet]);
+	return (
+		<div className="explore pt-5 pb-5">
+			<Header />
+			<Container className="mt-5 pt-5 pb-5 container-padding">
+				<Row>
+					<Col xs={12}>
+						<h1 className="heading mb-4 mt-5">Your Items</h1>
+					</Col>
+					{userNfts.map((item) => (
+						<Col xs={3}>
+							<ItemCard
+								title={item?.name}
+								thumbnail={item?.image}
+								username={shortAddress(item?.properties?.creators[0]?.address)}
+								userAvatar={item?.userAvatar || null}
+								terrirtory={item?.attributes[0]?.value}
+								exhibition={item?.attributes[2]?.value}
+								onClick={() =>
+									navigate("/preview", {
+										state: {
+											item: { ...item },
+											onWallet: true,
+										},
+									})
+								}
+							/>
+						</Col>
+					))}
 
-  const topFeaturedList = [
-    {
-      title: "Avatar",
-      thumbnail: "/movies/avatar.png",
-      username: "James Cameron",
-      userAvatar: "/avatars/user-1.png",
-      terrirtory: "Worldwide",
-      exhibition: "Digital & Television",
-    },
-    {
-      title: "Clerks",
-      thumbnail: "/movies/clerks.png",
-      username: "Kevin Smith",
-      userAvatar: "/avatars/user-1.png",
-      terrirtory: "United States",
-      exhibition: "Television",
-    },
-    {
-      title: "El Mariachi",
-      thumbnail: "/movies/elmariach.png",
-      username: "Robert Rodriguez",
-      userAvatar: "/avatars/user-1.png",
-      terrirtory: "United Kingdom",
-      exhibition: "Digital",
-    },
-    {
-      title: "Boyhood",
-      thumbnail: "/movies/boyhood.png",
-      username: "Richard Linklater",
-      userAvatar: "/avatars/user-1.png",
-      terrirtory: "Europe",
-      exhibition: "Web",
-    },
-  ];
-
-  const liveAuctionsList = [
-    {
-      title: "Jesus Camp",
-      thumbnail: "/movies/jesus-camp.png",
-      username: "Rachel Grady",
-      userAvatar: "/avatars/user-1.png",
-      terrirtory: "Worldwide",
-      exhibition: "Digital",
-      timeRemaining: "01:28 Hrs",
-    },
-    {
-      title: "Paranormal Activiy",
-      thumbnail: "/movies/paranormal.png",
-      username: "Oren Peli",
-      userAvatar: "/avatars/user-1.png",
-      terrirtory: "United States",
-      exhibition: "Television",
-      timeRemaining: "02:24 Hrs",
-    },
-    {
-      title: "Lotawana",
-      thumbnail: "/movies/lotawana.png",
-      username: "Trevor Hawkins",
-      userAvatar: "/avatars/user-1.png",
-      terrirtory: "United Kingdom",
-      exhibition: "Digital & Television",
-      timeRemaining: "00:28 Hrs",
-    },
-    {
-      title: "Souvenirs",
-      thumbnail: "/movies/souvenirs.png",
-      username: "Anna Mikami",
-      userAvatar: "/avatars/user-1.png",
-      terrirtory: "Asia",
-      exhibition: "Netflix",
-      timeRemaining: "05:32 Hrs",
-    },
-  ];
-
-  return (
-    <div className="explore pt-5 pb-5">
-      <Header />
-      <Container className="mt-5 pt-5 pb-5 container-padding">
-        <Row>
-          <Col xs={12}>
-            <h1 className="heading mb-4 mt-5">Your Items</h1>
-          </Col>
-          {userNfts.map((item) => (
-            <Col xs={3}>
-              <ItemCard
-                title={item?.name}
-                thumbnail={item?.image}
-                username={shortAddress(item?.properties?.creators[0]?.address)}
-                userAvatar={item?.userAvatar || null}
-                terrirtory={item?.attributes[0]?.value}
-                exhibition={item?.attributes[2]?.value}
-                onClick={() =>
-                  navigate("/preview", {
-                    state: {
-                      item: { ...item },
-                      onWallet: true,
-                    },
-                  })
-                }
-              />
-            </Col>
-          ))}
-
-          {/* <Col xs={12}>
+					{/* <Col xs={12}>
             <h1 className="heading mb-4 mt-5">Items On Auction</h1>
           </Col>
           {liveAuctionsList.map((item) => (
@@ -241,11 +173,11 @@ const Wallet = React.memo(() => {
               />
             </Col>
           ))} */}
-        </Row>
-      </Container>
-      <Footer />
-    </div>
-  );
+				</Row>
+			</Container>
+			<Footer />
+		</div>
+	);
 });
 
 export default Wallet;
