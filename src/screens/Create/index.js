@@ -32,7 +32,7 @@ import {
 } from "../../utils/utils";
 import { Metaplex, walletAdapterIdentity } from "@metaplex-foundation/js";
 import { AuthContext } from "../../context/AuthProvider";
-import { getDatabase, ref, set } from "firebase/database";
+import { getDatabase, ref, set, push } from "firebase/database";
 import firebase from "../../context/firebase"
 
 const Create = React.memo(() => {
@@ -94,8 +94,10 @@ const Create = React.memo(() => {
 
       setMintMessage("Updating Database...");
       const db = getDatabase(firebase);
-      set(ref(db, 'nft/' + currentUser.email.split('@')[0]), {
-        data: data
+      const postListRef = ref(db, 'nft/' + currentUser.email.split('@')[0]);
+      const newPostRef = push(postListRef);
+      set(newPostRef, {
+        [address]: data
       });
 
       setMintMessage("NFT Minted! Going back to your wallet...");
