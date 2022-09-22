@@ -49,7 +49,7 @@ export const Context: FC<{ children: ReactNode }> = ({ children }) => {
       <WalletProvider wallets={wallets} autoConnect={true}>
         <WalletModalProvider>
           <WalletMultiButton />
-          <WalletDisconnectButton />
+          {/* <WalletDisconnectButton /> */}
           {children}
         </WalletModalProvider>
       </WalletProvider>
