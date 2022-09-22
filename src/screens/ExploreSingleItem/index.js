@@ -173,6 +173,18 @@ const ExploreSingleItem = React.memo((props) => {
 							target="_blank"
 							rel="noopener noreferrer"
 							className="watch-btn mt-4">
+							<h6>View Contract PDF</h6>
+
+							<div className="watch-icon">
+								<Image src="/file-icon.svg" alt="watch" />
+							</div>
+						</a>
+
+						<a
+							href={item?.attributes[8]?.value}
+							target="_blank"
+							rel="noopener noreferrer"
+							className="watch-btn mt-4">
 							<h6>Watch Screener</h6>
 
 							<div className="watch-icon">

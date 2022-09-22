@@ -100,7 +100,7 @@ const Create = React.memo(() => {
         [address]: data
       });
 
-      setMintMessage("NFT Minted! Going back to your wallet...");
+      setMintMessage("NFT Minted! Click on 'MY WALLET' to view...");
     } catch (error) {
       setMintMessage(
         `Something went wrong, \n complete all fields and try again`
