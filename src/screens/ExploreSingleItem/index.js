@@ -169,7 +169,7 @@ const ExploreSingleItem = React.memo((props) => {
 						</div>
 
 						<a
-							href={item?.attributes[8]?.value}
+							href={item?.attributes[6]?.value}
 							target="_blank"
 							rel="noopener noreferrer"
 							className="watch-btn mt-4">
