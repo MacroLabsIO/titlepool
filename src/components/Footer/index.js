@@ -48,7 +48,7 @@ const Footer = React.memo(() => {
                     </Col>
 
                     <Col xs={12} className="d-flex align-items-center justify-content-between">
-                        <Image src="/logo-2.png" />
+                        <Image src="/logo-2.svg" />
 
                         <ul className="bottom-list d-flex">
                             <li>Terms</li>

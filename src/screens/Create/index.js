@@ -329,7 +329,7 @@ const Create = React.memo(() => {
                 required
                 id="runtime"
                 type="text"
-                placeholder="Runtime"
+                placeholder="Runtime (e.g. 1 hour 30 minutes)."
               />
             </Form.Group>
 
@@ -371,7 +371,7 @@ const Create = React.memo(() => {
                 }
                 id="royalty-percent"
                 type="text"
-                placeholder="Royalty Percent"
+                placeholder="(1-100%) We recommend a 50% royalty split."
               />
             </Form.Group>
 
