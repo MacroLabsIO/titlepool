@@ -78,6 +78,7 @@
       align-items: center;
       position: relative;
       text-decoration: none;
+      color: white;
 
       h6 {
         text-transform: uppercase;
@@ -175,6 +176,7 @@
 
       .wallet-button {
         background: linear-gradient(251.3deg, #ef4957 24%, #ff97a0 97.51%);
+        font-weight: bold;
       }
 
       .bid-button {

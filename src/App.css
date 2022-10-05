@@ -44,6 +44,17 @@ body {
     text-transform: uppercase;
 }
 
+@media (min-width: 992px) {
+.button-primary {
+    background-color: #101010 !important;
+    border: 2px solid #ffffff !important;
+    padding: 10px 16px;
+    padding-top: 11px;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+}
+
 .button-primary:hover {
     background-color: #202020 !important;
 }
@@ -51,9 +62,9 @@ body {
 .button-secondary {
     background-color: #748BF5 !important;
     border: 2px solid #748BF5 !important;
-    padding: 10px 20px;
+    padding: 10px 16px;
     padding-top: 11px;
-    font-size: 16px;
+    font-size: 12px;
     text-transform: uppercase;
 }
 
@@ -64,6 +75,22 @@ body {
 .button-secondary:focus,
 .button-primary:focus {
     box-shadow: none !important;
+}
+
+.button-alt {
+    background-color: #fff !important;
+    border: 2px solid #fff !important;
+    padding: 10px 16px;
+    padding-top: 11px;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: black;
+}
+
+.button-alt:hover {
+    background-color: rgb(225, 225, 225) !important;
+    border: 2px solid rgb(225, 225, 225) !important;
+    color: black;
 }
 
 .social-button {

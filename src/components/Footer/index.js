@@ -14,17 +14,17 @@ const Footer = React.memo(() => {
                     <Col xs={2}>
                         <ul>
                             <li className="heading">Quick Links</li>
-                            <li>Explore</li>
-                            <li>Upcoming Listings</li>
-                            <li>About Us</li>
+                            <li><a href="/" className="footer-link">Explore</a></li>
+                            <li><a href="/" className="footer-link">Upcoming Listings</a></li>
+                            <li><a href="/about-us" className="footer-link">About Us</a></li>
                         </ul>
                     </Col>
                     <Col xs={2}>
                         <ul>
                             <li className="heading">Company</li>
-                            <li>Contact Us</li>
-                            <li>Press Kit</li>
-                            <li>Media Highlights</li>
+                            <li><a href="mailto:contact@titlepool.io" className="footer-link">Contact Us</a></li>
+                            <li><a href="https://docsend.com/view/2e68umynfnpx9dns" target="_blank" className="footer-link" rel="noreferrer">Invest</a></li>
+                            {/* <li>Media Highlights</li> */}
                         </ul>
                     </Col>
                     <Col xs={4} className="ms-auto">
@@ -48,7 +48,7 @@ const Footer = React.memo(() => {
                     </Col>
 
                     <Col xs={12} className="d-flex align-items-center justify-content-between">
-                        <Image src="/logo-2.png" />
+                        <Image src="/logo-2.svg" />
 
                         <ul className="bottom-list d-flex">
                             <li>Terms</li>

@@ -148,7 +148,7 @@ const Explore = React.memo(() => {
   ];
 
   return (
-    <div className="explore pt-5 pb-5">
+    <div className="explore pt-3 pb-5">
       <Header />
       <Container className="mt-5 pt-5 pb-5 container-padding">
         <CandyShopDataValidator>

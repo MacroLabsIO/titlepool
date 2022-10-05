@@ -209,7 +209,7 @@ const ExploreSingleItem = React.memo((props) => {
 						<div className="info-card mt-5">
 							{onWallet ? (
 								<Form className="create-form">
-									<Form.Group className="input-primary mb-1 ">
+									<Form.Group className="input-primary mb-3 ">
 										<Form.Label className="label">Starting Bid</Form.Label>
 										<Form.Control
 											value={auctionOptions.startingBid}
@@ -221,10 +221,10 @@ const ExploreSingleItem = React.memo((props) => {
 											}
 											required
 											type="number"
-											placeholder="0.01"
+											placeholder="e.g 0.01 SOL"
 										/>
 									</Form.Group>
-									<Form.Group className="input-primary mb-1 ">
+									<Form.Group className="input-primary mb-3 ">
 										<Form.Label className="label">Start Time</Form.Label>
 										<br />
 										<DateTimePicker
@@ -242,9 +242,9 @@ const ExploreSingleItem = React.memo((props) => {
 											value={auctionstart}
 										/>
 									</Form.Group>
-									<Form.Group className="input-primary mb-1 ">
+									<Form.Group className="input-primary mb-3 ">
 										<Form.Label className="label">
-											Bidding Period (minutes)
+											Bidding Period (we recommend 1440 minutes / 24 hours)
 										</Form.Label>
 										<Form.Control
 											value={auctionOptions.biddingPeriod}
@@ -256,10 +256,10 @@ const ExploreSingleItem = React.memo((props) => {
 											}
 											required
 											type="number"
-											placeholder="600"
+											placeholder="e.g 1440"
 										/>
 									</Form.Group>
-									<Form.Group className="input-primary mb-1 ">
+									<Form.Group className="input-primary mb-3 ">
 										<Form.Label className="label">Minimum Incremental Bid</Form.Label>
 										<Form.Control
 											value={auctionOptions.tickSize}
@@ -271,12 +271,12 @@ const ExploreSingleItem = React.memo((props) => {
 											}
 											required
 											type="number"
-											placeholder="0.01"
+											placeholder="e.g 0.01 SOL"
 										/>
 									</Form.Group>
-									<Form.Group className="input-primary mb-1 ">
+									<Form.Group className="input-primary mb-3 ">
 										<Form.Label className="label">
-											Buy Now Price (0 for no buy now feature)
+											Buy Now Price (Enter 0 to skip)
 										</Form.Label>
 										<Form.Control
 											value={auctionOptions.buyNowPrice}
@@ -288,7 +288,7 @@ const ExploreSingleItem = React.memo((props) => {
 											}
 											required
 											type="number"
-											placeholder="10"
+											placeholder="10 SOL"
 										/>
 									</Form.Group>
 									<Button

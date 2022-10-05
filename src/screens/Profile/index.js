@@ -107,7 +107,7 @@ const Profile = React.memo(() => {
                     </Col>
 
                     <h6 className="sub-title mt-5 mb-4">
-                        Films Minted
+                        Rights Held
                     </h6>
                     {filmsMinted.map((item) => (
                         <Col xs={3} className="mb-5">
