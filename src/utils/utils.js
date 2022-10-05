@@ -18,13 +18,13 @@ import moment from 'moment';
 export const normalizeMetadata = (metadata, wallet, imageURI, ContractURI) => {
   let normalized = {
     name: metadata.filmName,
-    symbol: "Title Pool",
-    description: "This is a NFT from Title Pool site",
+    symbol: "Titlepool",
+    description: "This is a NFT from Titlepool site",
     seller_fee_basis_points: metadata.royaltyPerc * 100,
     image: imageURI,
     external_url: "",
     edition: 0,
-    collection: "Title Pool NFTs",
+    collection: "Titlepool NFTs",
     attributes: [
       {
         trait_type: "territory",

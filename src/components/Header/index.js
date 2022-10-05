@@ -34,40 +34,48 @@ const Header = React.memo(() => {
                     {(currentUser && publicKey) &&
                         <>
                             <Nav.Link>
-                                <Link to="/wallet">My Wallet</Link>
+                                <Link to="/wallet">Wallet</Link>
                             </Nav.Link>
+
+                            <Nav.Link>
+                                <Link to="/profile">Profile</Link>
+                            </Nav.Link>
+
                             <Button
-                                className="button-primary ms-5"
+                                className="button-alt ms-3"
                                 onClick={() => navigate("/create")}
                             >
                                 <FontAwesomeIcon icon={faPlus} /> Create
                             </Button>
-                            <Image
+                            {/* <Image
                                 onClick={() => navigate("/profile")}
-                                className="user-avatar ms-5"
+                                className="user-avatar ms-3"
                                 src="/avatars/user-1.png"
-                            />
+                            /> */}
+
+                            <WalletMultiButton className="ms-2" />
+
                         </> }
                         <>
                             
                             { currentUser && 
                             <>
-                            <WalletMultiButton className="button-primary ms-5" />
                             <Button
                                 onClick={() => {
                                     signOut(getAuth(firebase), () => {
                                         navigate("/");
                                     });
                                 }}
-                                className="button-primary ms-5">
+                                className="button-primary ms-3">
                                 Sign Out
                             </Button> 
                             </>}
                             { !currentUser && <Button
                                 onClick={() => navigate("/sign-up")}
-                                className="button-primary ms-5">
+                                className="button-primary ms-3">
                                 Sign Up 
                             </Button> }
+                            
                         </>
                 </Navbar.Collapse>
             </Container>

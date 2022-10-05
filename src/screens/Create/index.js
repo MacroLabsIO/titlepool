@@ -133,7 +133,7 @@ const Create = React.memo(() => {
                 required
                 id="filmname"
                 type="text"
-                placeholder="Film name"
+                placeholder="E.g. Avatar"
               />
             </Form.Group>
 
@@ -329,7 +329,7 @@ const Create = React.memo(() => {
                 required
                 id="runtime"
                 type="text"
-                placeholder="Runtime (e.g. 1 hour 30 minutes)."
+                placeholder="Runtime (e.g. 1 hour 30 minutes)"
               />
             </Form.Group>
 
@@ -343,7 +343,7 @@ const Create = React.memo(() => {
                 }
                 id="imdb-link"
                 type="text"
-                placeholder="https://www.imdb.com/name/nm0000138/bio"
+                placeholder="https://www.imdb.com/"
               />
             </Form.Group>
 
@@ -357,12 +357,12 @@ const Create = React.memo(() => {
                 }
                 id="screener-link"
                 type="text"
-                placeholder="https://www.youtube.com/watch?v=a-qiMS8fnV4&t=275s"
+                placeholder="https://www.youtube.com/"
               />
             </Form.Group>
 
             <Form.Group className="input-primary mb-5">
-              <Form.Label className="label">Royalty Percent</Form.Label>
+              <Form.Label className="label">Royalty Percentage</Form.Label>
               <Form.Control
                 required
                 value={metadata.royaltyPerc}
@@ -371,7 +371,7 @@ const Create = React.memo(() => {
                 }
                 id="royalty-percent"
                 type="text"
-                placeholder="(1-100%) We recommend a 50% royalty split."
+                placeholder="(1-100%) We recommend a 50% royalty split"
               />
             </Form.Group>
 
