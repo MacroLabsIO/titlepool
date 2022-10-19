@@ -64,6 +64,12 @@
     box-shadow: 0 3px 6px -4px rgb(0 0 0 / 12%), 0 6px 16px 0 rgb(0 0 0 / 8%), 0 9px 28px 8px rgb(0 0 0 / 5%) !important;
 }
 
+@media only screen and (max-width: 1440px) {
+.candy-modal .candy-modal-content {
+    padding: 30px 40px 10px;
+}
+}
+
 .candy-modal-close-btn .close {
     position: absolute !important;
     top: 50% !important;
@@ -112,7 +118,7 @@
 }
 
 .candy-auction-modal-countdown .candy-countdown {
-    background: linear-gradient(90deg, #67c8fc 0%, #8c7afc 48.44%, #d765ff 100%) !important;
+    background: white !important;
     color: #000 !important;
     width: fit-content !important;
     padding: 8px 14px !important;
@@ -164,4 +170,17 @@ a:hover {
   .wallet-adapter-dropdown {
     position: relative !important;
     display: inline-block !important;
+}
+
+.candy-auction-modal .candy-auction-modal-container .candy-auction-modal-control .candy-input-label {
+    font-size: 14px !important;
+    margin-bottom: 5px !important;
+    color: white !important;
+}
+
+.candy-input-price input {
+    border: none !important;
+    outline: none !important;
+    flex-grow: 1 !important;
+    background-color: #202020 !important;
 }
